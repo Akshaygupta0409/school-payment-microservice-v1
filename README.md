@@ -1,1 +1,0 @@
-# school-payment-microservice-v1
