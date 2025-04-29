@@ -25,7 +25,7 @@ A full-stack application for managing school payments, featuring a Node.js/Expre
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ## Project Overview
 
@@ -318,6 +318,3 @@ Contributions are welcome! Please follow these steps:
 4. Push to your branch: `git push origin feature-name`
 5. Open a pull request
 
-## License
-
-MIT License
