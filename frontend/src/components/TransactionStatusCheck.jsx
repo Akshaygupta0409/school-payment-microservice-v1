@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axiosConfig';
 
 const TransactionStatusCheck = () => {
   const [transactionId, setTransactionId] = useState('');
@@ -9,7 +9,7 @@ const TransactionStatusCheck = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.get(`/api/transactions/${transactionId}`);
+      const res = await axios.get(`/transactions/${transactionId}`);
       setStatus(res.data.status);
       setError('');
     } catch (err) {

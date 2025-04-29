@@ -51,7 +51,7 @@ export default function Register() {
       // Remove confirmPassword before sending to backend
       const { confirmPassword, ...submitForm } = form;
       
-      await axios.post('/api/users/register', submitForm);
+      await axios.post('/users/register', submitForm);
       
       // Redirect to login after successful registration
       navigate('/login');

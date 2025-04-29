@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axiosConfig';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Dashboard from './components/Dashboard.jsx';
@@ -26,7 +26,7 @@ const Logout = () => {
     const performLogout = async () => {
       try {
         // Optional: Call backend logout endpoint if exists
-        await axios.post('/api/auth/logout', {}, {
+        await axios.post('/auth/logout', {}, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -138,9 +138,9 @@ const PaymentCallback = () => {
       if (!orderId) return;
       
       try {
-        debugLog('Calling transaction-status API', `/api/payments/transaction-status/${orderId}`);
+        debugLog('Calling transaction-status API', `/payments/transaction-status/${orderId}`);
         // Call the backend API to get transaction details
-        const response = await axios.get(`/api/payments/transaction-status/${orderId}`, {
+        const response = await axios.get(`payments/transaction-status/${orderId}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }

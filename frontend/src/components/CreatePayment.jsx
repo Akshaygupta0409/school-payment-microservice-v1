@@ -53,7 +53,7 @@ export default function CreatePayment() {
         phone_number: formData.phoneNumber // Add phone number to payload
       };
 
-      const response = await axios.post('/api/payments/create-payment', payload, {
+      const response = await axios.post('/payments/create-payment', payload, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`

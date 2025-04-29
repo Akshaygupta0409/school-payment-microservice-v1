@@ -261,7 +261,7 @@ export default function Dashboard() {
         }
         
         // Make API call with authorization header
-        const response = await axios.get('/api/transactions', { 
+        const response = await axios.get('/transactions', { 
           params,
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
