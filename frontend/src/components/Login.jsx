@@ -38,7 +38,7 @@ export default function Login({ setIsAuthenticated }) {
     setIsLoading(true);
     
     try {
-      const response = await axios.post('/auth/login', form);
+      const response = await axios.post('/api/auth/login', form);
       
       // Store the token
       localStorage.setItem('token', response.data.token);

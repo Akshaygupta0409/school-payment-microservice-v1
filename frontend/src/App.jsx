@@ -6,6 +6,7 @@ import Register from './components/Register.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import CreatePayment from './components/CreatePayment.jsx';
 import TransactionStatusCheck from './components/TransactionStatusCheck.jsx';
+import ExternalPaymentRedirect from './components/ExternalPaymentRedirect.jsx';
 
 // Global auth context
 const AuthContext = React.createContext({
@@ -52,6 +53,12 @@ const Logout = () => {
   </div>;
 };
 
+// Debug logger for payment callback
+const debugLog = (message, data) => {
+  const ts = new Date().toISOString();
+  console.log(`[${ts}] [PAYMENT-CALLBACK-DEBUG] ${message}`, data);
+};
+
 // Callback Component to handle payment redirect
 const PaymentCallback = () => {
   const navigate = useNavigate();
@@ -64,6 +71,10 @@ const PaymentCallback = () => {
   });
 
   useEffect(() => {
+    // Debug logs on mount
+    debugLog('PaymentCallback mounted', { pathname: location.pathname, search: location.search });
+    debugLog('Location object', location);
+
     // Parse query parameters
     const searchParams = new URLSearchParams(location.search);
     const orderId = searchParams.get('orderId');
@@ -71,8 +82,7 @@ const PaymentCallback = () => {
     const collectRequestId = searchParams.get('EdvironCollectRequestId');
     const errorMessage = searchParams.get('error') || searchParams.get('errorMessage');
 
-    // Log the callback details (optional, for debugging)
-    console.log('Payment Callback Details:', { orderId, status, collectRequestId, errorMessage });
+    debugLog('Payment Callback Details', { orderId, status, collectRequestId, errorMessage });
 
     // Detect payment failure from URL or error message
     const isPaymentFailed = 
@@ -82,6 +92,7 @@ const PaymentCallback = () => {
       errorMessage || 
       location.pathname.includes('payment-failed') ||
       document.title.includes('Failed');
+    debugLog('isPaymentFailed', isPaymentFailed);
 
     // Set status details for UI feedback
     let statusMessage = '';
@@ -127,6 +138,7 @@ const PaymentCallback = () => {
       if (!orderId) return;
       
       try {
+        debugLog('Calling transaction-status API', `/api/payments/transaction-status/${orderId}`);
         // Call the backend API to get transaction details
         const response = await axios.get(`/api/payments/transaction-status/${orderId}`, {
           headers: {
@@ -134,7 +146,7 @@ const PaymentCallback = () => {
           }
         });
         
-        console.log('Transaction details from API:', response.data);
+        debugLog('Transaction details from API', response.data);
         
         // If the API returns a different status, use that instead
         if (response.data && response.data.status) {
@@ -149,7 +161,7 @@ const PaymentCallback = () => {
           }
         }
       } catch (error) {
-        console.error('Error fetching transaction details:', error);
+        debugLog('Error fetching transaction details', error);
         // If we can't get transaction details and no status, assume failed
         if (!status) {
           finalStatus = 'FAILED';
@@ -160,6 +172,7 @@ const PaymentCallback = () => {
           }));
         }
       } finally {
+        debugLog('Navigating to dashboard', { orderId, status: finalStatus });
         // Redirect to dashboard with payment state immediately
         navigate('/dashboard', { 
           state: { 
@@ -310,6 +323,16 @@ function App() {
           <Route 
             path="/payment-callback" 
             element={<PaymentCallback />} 
+          />
+          
+          {/* External Payment Gateway Redirect Routes */}
+          <Route 
+            path="/payment-failure" 
+            element={<ExternalPaymentRedirect />} 
+          />
+          <Route 
+            path="/payment-success" 
+            element={<ExternalPaymentRedirect />} 
           />
           
           {/* Default Redirect */}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import axios from '../utils/axiosConfig';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../App';
 import NeonGridBackground from './NeonGridBackground';

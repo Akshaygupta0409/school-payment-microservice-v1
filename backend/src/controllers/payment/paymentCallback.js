@@ -69,7 +69,7 @@ export const paymentCallback = async (req, res, next) => {
           console.log('Updated Order Status:', orderStatus);
           
           // Redirect to frontend with status info
-          return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment-callback?orderId=${orderId}&status=${callbackStatus}&EdvironCollectRequestId=${collectRequestId}`);
+          return res.redirect(`${process.env.FRONTEND_URL || 'https://school-payment-microservice-v1.vercel.app'}/payment-callback?orderId=${orderId}&status=${callbackStatus}&EdvironCollectRequestId=${collectRequestId}`);
         }
       } catch (updateError) {
         console.error('Error updating order status:', updateError);
@@ -135,14 +135,14 @@ export const paymentCallback = async (req, res, next) => {
         }
         
         // Redirect to frontend with status info
-        return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment-callback?orderId=${orderId || collectRequestId}&status=${data.status}&EdvironCollectRequestId=${collectRequestId}`);
+        return res.redirect(`${process.env.FRONTEND_URL || 'https://school-payment-microservice-v1.vercel.app'}/payment-callback?orderId=${orderId || collectRequestId}&status=${data.status}&EdvironCollectRequestId=${collectRequestId}`);
       }
     } catch (apiError) {
       console.error('Error checking payment status:', apiError);
     }
     
     // If we couldn't process the status, redirect with PENDING status
-    return res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:3000'}/payment-callback?orderId=${orderId || collectRequestId}&status=PENDING&EdvironCollectRequestId=${collectRequestId}`);
+    return res.redirect(`${process.env.FRONTEND_URL || 'https://school-payment-microservice-v1.vercel.app'}/payment-callback?orderId=${orderId || collectRequestId}&status=PENDING&EdvironCollectRequestId=${collectRequestId}`);
   } catch (error) {
     console.error('Payment callback error:', error);
     res.status(500).send('Internal Server Error');
