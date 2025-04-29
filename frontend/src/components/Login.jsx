@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axiosConfig';
 import NeonGridBackground from './NeonGridBackground';
 
 export default function Login({ setIsAuthenticated }) {
@@ -38,7 +38,7 @@ export default function Login({ setIsAuthenticated }) {
     setIsLoading(true);
     
     try {
-      const response = await axios.post('/api/auth/login', form);
+      const response = await axios.post('/auth/login', form);
       
       // Store the token
       localStorage.setItem('token', response.data.token);
@@ -49,6 +49,7 @@ export default function Login({ setIsAuthenticated }) {
       // Navigate to payments page
       navigate('/payments');
     } catch (err) {
+      console.error('Login error:', err);
       setError(err.response?.data?.message || 'Login failed. Please try again.');
       setIsLoading(false);
     }
