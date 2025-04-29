@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+// Create base URLs for different environments
+const API_URL = import.meta.env.PROD 
+  ? 'https://school-payment-microservice-v1.onrender.com/api'
+  : '/api';
+
 const axiosInstance = axios.create({
-  baseURL: '/api',  // Changed to use relative URL for proxy
+  baseURL: API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
