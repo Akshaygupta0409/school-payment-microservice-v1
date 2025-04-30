@@ -5,7 +5,7 @@ A full-stack application for managing school payments, featuring a Node.js/Expre
 ## Deployed Application
 
 - **Backend API**: [https://school-payment-microservice-v1.onrender.com](https://school-payment-microservice-v1.onrender.com)
-- **Frontend**: [https://school-payment-microservice-v1.vercel.app/](https://school-payment-microservice-v1.vercel.app/)
+- **Frontend**: [https://school-payment-microservice-v1.vercel.app/](https://school-payment-microservice-v1-5ann-kqay7hjb3.vercel.app/)
 
 ## Table of Contents
 
