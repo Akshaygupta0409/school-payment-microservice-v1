@@ -77,6 +77,11 @@ npm run build
 
 This will create an optimized build in the `dist` directory that can be deployed to any static hosting service.
 
+## Deployed Application
+
+- **Frontend URL**: [https://school-payment-microservice-v1.vercel.app/](https://school-payment-microservice-v1.vercel.app/)
+- **Backend URL**: [https://school-payment-microservice-v1.onrender.com](https://school-payment-microservice-v1.onrender.com)
+
 ## Features
 
 ### User Authentication
@@ -176,7 +181,3 @@ Contributions are welcome! Please follow these steps:
 3. Commit your changes: `git commit -m 'Add some feature'`
 4. Push to your branch: `git push origin feature-name`
 5. Open a pull request
-
-## License
-
-MIT

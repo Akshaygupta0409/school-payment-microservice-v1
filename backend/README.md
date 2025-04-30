@@ -2,10 +2,11 @@
 
 A robust Node.js/Express/MongoDB-based microservice for handling school fee payments integrated with the Edviron payment gateway.
 
-## Deployed Backend
+## Deployed Backend and Frontend
 
-- **URL**: [https://school-payment-microservice-v1.onrender.com](https://school-payment-microservice-v1.onrender.com)
-- **Health Check**: [https://school-payment-microservice-v1.onrender.com/](https://school-payment-microservice-v1.onrender.com/)
+- **Backend URL**: [https://school-payment-microservice-v1.onrender.com](https://school-payment-microservice-v1.onrender.com)
+- **Frontend URL**: [https://school-payment-microservice-v1.vercel.app/](https://school-payment-microservice-v1.vercel.app/)
+- **Backend Health Check**: [https://school-payment-microservice-v1.onrender.com/](https://school-payment-microservice-v1.onrender.com/)
 
 ## Project Structure
 
