@@ -53,11 +53,8 @@
     const currentUrl = window.location.href;
     const queryParams = window.location.search;
     
-    // Extract the target route from the current URL if it contains a specific segment
-    let targetRoute = '/dashboard';
-    if (currentUrl.includes('/payment-callback')) {
-      targetRoute = '/payment-callback' + queryParams;
-    }
+    // Always redirect to the payment-callback route preserving query params
+    const targetRoute = '/payment-callback' + queryParams;
     
     console.log('Redirecting to:', targetRoute);
 
