@@ -40,6 +40,17 @@ axiosInstance.interceptors.request.use(
       data: config.data
     });
     
+    // Ensure auth endpoints are properly formatted
+    if (config.url && config.url.startsWith('/auth') && !API_URL.endsWith('/api')) {
+      // If we're using a direct URL (not the /api proxy), ensure auth endpoints have /api prefix
+      debugLog('Auth endpoint detected, ensuring proper API path');
+      if (API_URL.includes('onrender.com') || API_URL.includes('localhost')) {
+        // Only modify if it's a direct backend URL
+        config.url = `/api${config.url}`;
+        debugLog('Modified auth URL path:', config.url);
+      }
+    }
+    
     return config;
   },
   (error) => {

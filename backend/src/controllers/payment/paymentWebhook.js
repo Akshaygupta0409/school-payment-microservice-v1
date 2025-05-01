@@ -2,8 +2,47 @@ import jwt from 'jsonwebtoken';
 import { OrderStatus } from '../../models/OrderStatus.js';
 import Order from '../../models/Order.js';
 
+/**
+ * Webhook Integration Controller - Implements the webhook integration requirements
+ * 
+ * This controller fulfills the "🌐 Webhook Integration" requirement from the assessment document:
+ * "Create a POST route to update transactions details in DB with the given payload"
+ * 
+ * The webhook endpoint receives payment status updates from the payment gateway and
+ * updates the corresponding order and transaction details in the database.
+ * 
+ * The payload format as specified in the assessment:
+ * {
+ *   "status": 200,
+ *   "order_info": {
+ *     "order_id": "collect_id/transaction_id",
+ *     "order_amount": 2000,
+ *     "transaction_amount": 2200,
+ *     "gateway": "PhonePe",
+ *     "bank_reference": "YESBNK222",
+ *     "status": "success",
+ *     "payment_mode": "upi",
+ *     "payemnt_details": "success@ybl",
+ *     "Payment_message": "payment success",
+ *     "payment_time": "2025-04-23T08:14:21.945+00:00",
+ *     "error_message": "NA"
+ *   }
+ * }
+ */
+
 const PG_KEY = process.env.PG_KEY;
 
+/**
+ * Payment Webhook Handler
+ * 
+ * This function processes webhook payloads from the payment gateway and updates
+ * the corresponding order and transaction details in the database.
+ * 
+ * It implements the requirement: "Parse the webhook payload. Update the corresponding Order Status entry in MongoDB."
+ * 
+ * @param {Object} req - Express request object containing the webhook payload
+ * @param {Object} res - Express response object
+ */
 export const paymentWebhook = async (req, res) => {
   try {
     // Validate webhook payload structure

@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import NeonGridBackground from './NeonGridBackground';
 
 // Create a debug logger function that logs to console with timestamp
 const debugLog = (message, data) => {
@@ -10,6 +11,17 @@ const debugLog = (message, data) => {
 const ExternalPaymentRedirect = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [animationClass, setAnimationClass] = useState('');
+
+  useEffect(() => {
+    // Add initial animation
+    setAnimationClass('opacity-0 translate-y-4');
+    const timer = setTimeout(() => {
+      setAnimationClass('opacity-100 translate-y-0');
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     // Log the component mount
@@ -74,7 +86,7 @@ const ExternalPaymentRedirect = () => {
       });
       
       debugLog('Navigation to dashboard triggered');
-    }, 1000); // Short delay to ensure logs are visible
+    }, 3000); // Short delay to ensure logs are visible
 
     // Cleanup function
     return () => {
@@ -83,13 +95,17 @@ const ExternalPaymentRedirect = () => {
   }, [navigate, location]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-dark-bg px-4">
-      <div className="max-w-md w-full bg-black-grid/60 backdrop-blur-lg rounded-2xl shadow-2xl border border-black-border p-8 space-y-6">
+    <div className="relative min-h-screen bg-dark-bg flex flex-col items-center justify-center px-4 overflow-hidden">
+      <NeonGridBackground />
+      
+      <div className={`relative z-10 max-w-md w-full bg-black-grid/60 backdrop-blur-lg rounded-2xl shadow-2xl border border-black-border p-8 space-y-6 transition-all duration-500 ease-in-out transform ${animationClass}`}>
         <h2 className="text-2xl font-bold text-center text-gray-200">Payment Processing</h2>
-        <div className="text-center text-gray-400 mb-4">
-          <p>URL: {window.location.href}</p>
-          {location.search && <p>Parameters: {location.search}</p>}
+        
+        <div className="text-center text-gray-400 bg-black-hover/30 rounded-lg p-4 border border-black-border">
+          <p className="text-sm mb-2">URL: {window.location.href}</p>
+          {location.search && <p className="text-xs truncate">Parameters: {location.search}</p>}
         </div>
+        
         <div className="flex flex-col items-center justify-center py-6">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-300 mb-4"></div>
           <div className="text-gray-300">Redirecting to dashboard...</div>

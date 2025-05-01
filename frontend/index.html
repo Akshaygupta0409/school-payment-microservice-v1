@@ -8,9 +8,22 @@
     <meta name="description" content="School Payments Frontend" />
     <link rel="manifest" href="/manifest.json" />
     <title>School Payments</title>
+    <base href="/" /> <!-- Add base href to ensure routes work properly -->
+    <script>
+      // Handle direct navigation to routes in production
+      (function() {
+        // If we're not being served by the development server and not at root
+        if (window.location.pathname !== '/' && !window.location.href.includes('localhost')) {
+          console.log('Handling direct route navigation:', window.location.pathname);
+          // Store the path to restore after load
+          window.INITIAL_PATH = window.location.pathname + window.location.search;
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/index.jsx"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
