@@ -106,7 +106,8 @@ export default function Dashboard() {
   const statusOptions = [
     { value: 'Success', label: 'Success' },
     { value: 'Pending', label: 'Pending' },
-    { value: 'Failed', label: 'Failed' }
+    { value: 'Failed', label: 'Failed' },
+    { value: 'Cancelled', label: 'Cancelled' }
   ];
 
   // Load filters from URL params on initial load
