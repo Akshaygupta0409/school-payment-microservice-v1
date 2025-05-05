@@ -46,7 +46,7 @@ const PG_KEY = process.env.PG_KEY;
 export const paymentWebhook = async (req, res) => {
   try {
     // Validate webhook payload structure
-    const { order_info, sign } = req.body;
+    const {order_info, sign } = req.body;
     if (!order_info || !sign) {
       return res.status(400).json({ error: 'Invalid webhook payload' });
     }
@@ -62,13 +62,15 @@ export const paymentWebhook = async (req, res) => {
     // Extract webhook payload details
     const { 
       order_id, 
-      status, 
-      payment_time, 
+      order_amount,
+      transaction_amount,
+      gateway,
       bank_reference, 
+      status, 
+      payment_mode,
+      payment_details,
       payment_message, 
       error_message,
-      amount,
-      payment_mode
     } = order_info;
 
     // Find corresponding OrderStatus
@@ -79,12 +81,16 @@ export const paymentWebhook = async (req, res) => {
 
     // Update OrderStatus with complete webhook information
     orderStatus.status = status.toLowerCase();
-    orderStatus.transaction_amount = parseFloat(amount);
+    orderStatus.transaction_amount = parseFloat(transaction_amount);
     orderStatus.payment_mode = payment_mode;
     orderStatus.payment_time = payment_time ? new Date(payment_time) : null;
     orderStatus.bank_reference = bank_reference || '';
     orderStatus.payment_message = payment_message || '';
     orderStatus.error_message = error_message || '';
+    orderStatus.order_amount = parseFloat(order_amount);
+    orderStatus.gateway = gateway;
+    orderStatus.amount = parseFloat(amount);
+    orderStatus.payment_details = payment_details;
 
     // Update corresponding Order status
     const order = await Order.findById(orderStatus.order_id);

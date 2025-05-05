@@ -25,7 +25,7 @@ A full-stack application for managing school payments, featuring a Node.js/Expre
 - [Testing](#testing)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
-
+- [API Documentation](#api-documentation)
 
 ## Project Overview
 
@@ -308,6 +308,76 @@ To deploy the frontend:
    - Set build command: `cd frontend && npm install && npm run build`
    - Set publish directory: `frontend/dist`
 
+## API Documentation
+
+The frontend interacts with the following API endpoints:
+
+### Authentication APIs
+- **Login**
+  - Endpoint: `/api/auth/login`
+  - Method: POST
+  - Description: Authenticates user and returns JWT token
+  - Request Body: `{ email: string, password: string }`
+
+- **Logout**
+  - Endpoint: `/api/auth/logout`
+  - Method: POST
+  - Description: Logs out the user
+  - Headers: Authorization Bearer Token required
+
+- **Register**
+  - Endpoint: `/api/users/register`
+  - Method: POST
+  - Description: Registers a new user
+  - Request Body: `{ name: string, email: string, password: string }`
+
+### Payment APIs
+- **Create Payment**
+  - Endpoint: `/api/payments`
+  - Method: POST
+  - Description: Creates a new payment request
+  - Headers: Authorization Bearer Token required
+  - Request Body: 
+    ```json
+    {
+      "amount": number,
+      "student_info": {
+        "name": string,
+        "id": string,
+        "email": string,
+        "phone_number": string
+      }
+    }
+    ```
+
+- **Check Transaction Status**
+  - Endpoint: `/api/payments/transaction-status/:transactionId`
+  - Method: GET
+  - Description: Gets the current status of a transaction
+  - Headers: Authorization Bearer Token required
+
+### Transaction APIs
+- **List Transactions**
+  - Endpoint: `/api/transactions`
+  - Method: GET
+  - Description: Gets paginated list of transactions with filters
+  - Headers: Authorization Bearer Token required
+  - Query Parameters:
+    - `page`: number (default: 1)
+    - `page_size`: number (default: 10)
+    - `sort_by`: string
+    - `sort_direction`: 'asc' | 'desc'
+    - `status`: string[] (optional)
+    - `school_ids`: string[] (optional)
+    - `start_date`: string (optional)
+    - `end_date`: string (optional)
+
+### Base URLs
+- Development: `http://localhost:4574/api`
+- Production: `https://school-payment-microservice-v1.onrender.com/api`
+
+All API endpoints require authentication except for login and register. The frontend automatically includes the JWT token in the Authorization header for authenticated requests.
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps:
@@ -317,4 +387,3 @@ Contributions are welcome! Please follow these steps:
 3. Commit your changes: `git commit -m 'Add some feature'`
 4. Push to your branch: `git push origin feature-name`
 5. Open a pull request
-
